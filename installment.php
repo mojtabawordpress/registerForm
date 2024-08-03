@@ -11,14 +11,13 @@ Author URI: https://github.com/mojtabafallah
 Text Domain: installment
 */
 
-
 add_action('admin_menu', function () {
     add_menu_page('محصولات اقساطی',
         'اقساط',
         'manage_options',
         'installment',
         function () {
-            echo 'hello';
+           echo  "hello world";
         },
         'dashicons-admin-site',
         1);
