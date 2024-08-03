@@ -17,7 +17,7 @@ add_action('admin_menu', function () {
         'manage_options',
         'installment',
         function () {
-           echo  "hello world";
+            echo "hello world";
         },
         'dashicons-admin-site',
         1);
@@ -33,3 +33,40 @@ add_action('admin_menu', function () {
 
 }, 15);
 
+//Add shortcodes
+
+add_shortcode('academy-form', 'show_form');
+
+function show_form()
+{
+    if (isset($_POST['send'])) {
+
+        if (!isset($_POST['f_name'], $_POST['l_name'], $_POST['nonce_field'])) {
+            echo "error";
+            return;
+        }
+
+        if (trim($_POST['f_name']) == "" || trim($_POST['l_name']) == "") {
+            echo "error empty";
+            return;
+        }
+
+        if (!wp_verify_nonce($_POST['nonce_field'],'send_form_register')){
+
+            echo "error nonce";
+            return;
+        }
+
+        echo "ok";
+
+
+    }
+    ?>
+    <form action="" method="post">
+        <?php wp_nonce_field('send_form_register','nonce_field') ?>
+        <label for="f_name">نام:</label><input pattern="[A-Za-z]" id="f_name" name="f_name" type="text">
+        <label for="l_name">فامیلی:</label><input id="l_name" name="l_name" type="text">
+        <button name="send">ثبت</button>
+    </form>
+    <?php
+}
