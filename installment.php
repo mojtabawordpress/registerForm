@@ -86,12 +86,14 @@ function add_meta_box_button($post, $arg)
     add_meta_box('post-button',
         'دکمه لینک',
         function () {
-        $nameButton = get_post_meta(get_the_ID(), 'button_name',true);
+            $nameButton = get_post_meta(get_the_ID(), 'button_name', true);
+            $linkButton = get_post_meta(get_the_ID(), 'button_link', true);
+
             ?>
             <label for="name-button">متن دکمه</label>
-            <input id="name-button" type="text" name="name_button" value="<?php echo $nameButton?>">
+            <input id="name-button" type="text" name="name_button" value="<?php echo $nameButton ?>">
             <label for="link-button">لینک دکمه</label>
-            <input id="link-button" type="url" name="link_button">
+            <input id="link-button" type="url" name="link_button" value="<?php echo $linkButton ?>">
             <?php
         },
         'post',
@@ -104,13 +106,24 @@ function add_meta_box_button($post, $arg)
 add_action('save_post', 'save_button_data');
 function save_button_data($postId)
 {
-    if (isset($_POST['name_button'])){
+    if (isset($_POST['name_button'])) {
 //        add_post_meta($postId,'button_name',$_POST['name_button']);
-        update_post_meta(get_the_ID(),'button_name',$_POST['name_button']);
+        update_post_meta(get_the_ID(), 'button_name', $_POST['name_button']);
     }
 
-    if (isset($_POST['link_button'])){
+    if (isset($_POST['link_button'])) {
 //        add_post_meta($postId, 'button_link', $_POST['link_button']);
         update_post_meta($postId, 'button_link', $_POST['link_button']);
     }
+}
+
+//3.add meta data to content
+add_filter('the_content', 'add_button_end');
+
+function add_button_end($content)
+{
+    $buttonName = get_post_meta(get_the_ID(), 'button_name', true);
+    $buttonLink = get_post_meta(get_the_ID(), 'button_link', true);
+    $html = "<a href='$buttonLink'>$buttonName</a>";
+    return $content . $html;
 }
