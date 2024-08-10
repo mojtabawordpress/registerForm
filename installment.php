@@ -37,8 +37,18 @@ add_action('admin_menu', function () {
 
 add_shortcode('academy-form', 'show_form');
 
-function show_form()
+function show_form($att, $content)
 {
+    $color = "#fff";
+    if (isset($att['color'])){
+        $color = $att['color'];
+    }
+
+    $title = 'عنوان پیش فرض';
+    if (isset($att['title'])){
+        $title = $att['title'];
+    }
+
     if (isset($_POST['send'])) {
 
         if (!isset($_POST['f_name'], $_POST['l_name'], $_POST['nonce_field'])) {
@@ -52,17 +62,15 @@ function show_form()
         }
 
         if (!wp_verify_nonce($_POST['nonce_field'],'send_form_register')){
-
             echo "error nonce";
             return;
         }
 
         echo "ok";
-
-
     }
     ?>
-    <form action="" method="post">
+        <h5><?php echo $title?></h5>
+    <form action="" method="post" style="background-color: <?php echo $color?>">
         <?php wp_nonce_field('send_form_register','nonce_field') ?>
         <label for="f_name">نام:</label><input pattern="[A-Za-z]" id="f_name" name="f_name" type="text">
         <label for="l_name">فامیلی:</label><input id="l_name" name="l_name" type="text">
