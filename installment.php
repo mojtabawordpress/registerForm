@@ -11,6 +11,9 @@ Author URI: https://github.com/mojtabafallah
 Text Domain: installment
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 add_action('admin_menu', function () {
     add_menu_page('محصولات اقساطی',
         'اقساط',
@@ -127,3 +130,6 @@ function add_button_end($content)
     $html = "<a href='$buttonLink'>$buttonName</a>";
     return $content . $html;
 }
+
+require_once 'product/init.php';
+
