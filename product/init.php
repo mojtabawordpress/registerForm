@@ -58,3 +58,12 @@ function save_prices($productId)
         update_post_meta($productId, 'prices', $price);
     }
 }
+
+add_action('save_post_product', 'add_counter');
+
+function add_counter($productId)
+{
+    $counter = intval(get_post_meta($productId, 'edit_count', true));
+    $counter++;
+    update_post_meta($productId, 'edit_count', $counter);
+}
