@@ -43,7 +43,7 @@ function add_meta_box_price()
         'product-price',
         'قیمت محصول',
         function () {
-
+            include_once 'views/metabox_price.php';
         },
         'product'
     );
