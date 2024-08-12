@@ -6,7 +6,10 @@ if (!defined('ABSPATH')) {
 <div class="container-price">
     <div class="row-price">
         <label for='product-price'>قیمت محصول:</label>
-        <input id='product-price' type="text" name="price">
+        <input id='product-price' type="number" name="price[]">
+        <?php foreach ($prices as $price): ?>
+            <input type="number" value="<?php echo $price?>">
+        <?php endforeach; ?>
     </div>
 </div>
 

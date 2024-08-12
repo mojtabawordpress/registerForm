@@ -43,8 +43,18 @@ function add_meta_box_price()
         'product-price',
         'قیمت محصول',
         function () {
+            $prices = get_post_meta(get_the_ID(), 'prices', true);
             include_once 'views/metabox_price.php';
         },
         'product'
     );
+}
+
+add_action('save_post_product', 'save_prices');
+function save_prices($productId)
+{
+    if (isset($_POST['price'])) {
+        $price = $_POST['price'];
+        update_post_meta($productId, 'prices', $price);
+    }
 }
